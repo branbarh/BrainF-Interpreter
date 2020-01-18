@@ -124,10 +124,16 @@ function act(code, curChar) {
     // Increment the cell being pointed to once:
     case "+":
       cells[pointer]++;
+      if (cells[pointer] > 255) {
+        cells[pointer] = 0;
+      }
     break;
     // Deincrement the cell being pointed to once:
     case "-":
       cells[pointer]--;
+      if (cells[pointer] < 0) {
+        cells[pointer] = 255;
+      }
     break;
     // Print the value in the cell being pointed to as an ASCII character:
     case ".":
@@ -141,6 +147,7 @@ function act(code, curChar) {
       } else {
         cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
       }
+      cells[pointer] = cells[pointer] % 256;
     break;
     // Loop if the value in the cell being pointed to is not 0:
     case "]": // We don't actually need to worry about loop openings, only the closings :)
