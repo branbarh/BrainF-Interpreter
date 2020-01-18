@@ -20,10 +20,13 @@ var pointer = 0;
 
 var curChar = 0;
 
+var startTime = 0;
+
 // not a huge fan of these ("window.onload = function() {}" looks a lot cleaner imo), but hey, doing things different is good for you, right? yes, the answer to that is yes.
 window.addEventListener("load", function() {
   // déjà vu...
   document.getElementById("run").addEventListener("click", function() {
+    setState("running");
     // reset stuff:
     document.getElementById("output").value = "";
     cells = [];
@@ -32,6 +35,7 @@ window.addEventListener("load", function() {
     }
     pointer = 0;
     curChar = 0;
+    startTime = new Date().getTime();
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
     if (document.getElementById("delay").value) { // DEBUG MODE:
@@ -49,17 +53,19 @@ window.addEventListener("load", function() {
         console.log("Pointer: " + pointer);
         console.log("––––––––––");
         if (curChar >= code.length) {
+          setState("finished", (new Date().getTime()) - startTime);
           console.warn("Finished!");
           clearInterval(interval);
         }
       }, Number(document.getElementById("delay").value));
-      document.getElementById("run").onclick = function() {clearInterval(interval);};
+      document.getElementById("stop").onclick = function() {setState("stopped"); clearInterval(interval);};
     } else {
       while (curChar < code.length) {
         var ret = run(code, curChar);
         if (ret !== undefined) curChar = ret;
         curChar++;
       }
+      setState("finished", (new Date().getTime()) - startTime);
       console.log("Result:");
       console.log(cells);
       console.log("Pointer: " + pointer);
@@ -107,6 +113,21 @@ function run(code, curChar) {
         }
         return tempChar;
       }
+    break;
+  }
+}
+
+function setState(state, time) {
+  var time = document.getElementById("time");
+  switch(state) {
+    case "running":
+      time.innerHTML = "<p>Running...</p>";
+    break;
+    case "stopped":
+      time.innerHTML = "<p>Stopped.</p>";
+    break;
+    case "finished":
+      time.innerHTML = "<p>Finished in " + time + "ms!<br>See the result of the cells and the pointer in the console.</p>"
     break;
   }
 }
