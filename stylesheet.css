@@ -12,6 +12,7 @@ textarea, input {
   width: calc(100% - 20px - 2px);
   padding: 10px;
   border: 1px solid rgb(200, 200, 200);
+  font-family: monospace;
 }
 textarea:focus, input:focus, button:focus {
   outline: none;
