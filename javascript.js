@@ -29,15 +29,15 @@ window.addEventListener("load", function() {
     var code = document.getElementById("code").value;
     var interval = setInterval(function() {
       run(code, code[curChar]);
-      console.log(curChar);
+      console.log(curChar + ": \"" + code[curChar] + "\"");
       console.log(cells);
-      console.log(pointer);
+      console.log("Pointer: " + pointer);
       console.log("---");
       curChar++;
       if (curChar >= code.length) {
         clearInterval(interval);
       }
-    }, document.getElementById("delay").value || 100);
+    }, Number(document.getElementById("delay").value) || 100);
   });
 });
 
