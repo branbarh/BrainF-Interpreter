@@ -63,7 +63,12 @@ function run(debug) {
   else {
     // Run all loops of the code:
     while (curChar < code.length) {
+      // If the code is being run in debug mode, log some extra information:
+      if (debug) logDebug("pre", code);
+      // Run a loop of the code:
       loop(code);
+      // If the code is being run in debug mode, log some extra information:
+      if (debug) logDebug("post", code);
     }
     // Finish:
     finish();
