@@ -24,6 +24,7 @@ var curChar = 0;
 window.addEventListener("load", function() {
   // déjà vu...
   document.getElementById("run").addEventListener("click", function() {
+    document.getElementById("output").value = "";
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
     var interval = setInterval(function() {
