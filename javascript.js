@@ -1,7 +1,4 @@
 
-// BRUH.html
-// okBOOMER.java
-
 /*
 
   This is a BrainFuck Interpreter I made because, well, why not?
@@ -9,94 +6,135 @@
 
 */
 
-// setup the "BrainFuck™ Cell Array," which is just fancy talk for "var cells = [9999 cells...];" :)
+// Setup the cells:
 var cells = [];
 for (var i = 0; i < 9999; i++) {
-  // whoop whoop we can codeee
   cells.push(0);
 }
-// the pointer starts at 0. this is arguably the only thing that makes sense in this language:
+// setup the pointer and some other variables:
 var pointer = 0;
-
 var curChar = 0;
-
 var startTime = 0;
 
-// not a huge fan of these ("window.onload = function() {}" looks a lot cleaner imo), but hey, doing things different is good for you, right? yes, the answer to that is yes.
-window.addEventListener("load", function() {
-  // déjà vu...
-  document.getElementById("run").addEventListener("click", function() {
-    setState("running");
-    // reset stuff:
-    document.getElementById("output").value = "";
-    cells = [];
-    for (var i = 0; i < 9999; i++) {
-      cells.push(0);
-    }
-    pointer = 0;
-    curChar = 0;
-    startTime = new Date().getTime();
-    // get the garbage code the user wrote that probably does nothing interesting:
-    var code = document.getElementById("code").value;
-    if (document.getElementById("delay").value) { // DEBUG MODE:
-      console.warn("Code is being run in DEBUG MODE.");
-      var interval = setInterval(function() {
-        console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
-        var ret = run(code, curChar);
-        if (ret !== undefined) {
-          curChar = ret;
-        }
-        curChar++;
-        console.log("Result:");
-        console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
-        console.log(cells);
-        console.log("Pointer: " + pointer);
-        console.log("––––––––––");
-        if (curChar >= code.length) {
-          setState("finished", (new Date().getTime()) - startTime);
-          console.warn("Finished!");
-          clearInterval(interval);
-        }
-      }, Number(document.getElementById("delay").value));
-      document.getElementById("stop").onclick = function() {setState("stopped"); clearInterval(interval);};
-    } else {
-      while (curChar < code.length) {
-        var ret = run(code, curChar);
-        if (ret !== undefined) curChar = ret;
-        curChar++;
-      }
-      setState("finished", (new Date().getTime()) - startTime);
-      console.log("Result:");
-      console.log(cells);
-      console.log("Pointer: " + pointer);
-      console.warn("Finished!");
-    }
-  });
-});
+// Define the interval:
+var interval;
 
-function doShit(yesThisIsTheNameOfTheVariableSoDealWithIt) {
-  // jk im not that mean to myself
+function run(debug) {
+  // Set the state to "running" or "debug"
+  setState(debug ? "debug" : "running");
+  
+  // Reset the cells, the pointer, the current character, and set the start time:
+  document.getElementById("output").value = "";
+  cells = [];
+  for (var i = 0; i < 9999; i++) {
+    cells.push(0);
+  }
+  pointer = 0;
+  curChar = 0;
+  startTime = new Date().getTime();
+  
+  // Get the code to be run:
+  var code = document.getElementById("code").value;
+  
+  // Print to the console that the code is being run in debug mode:
+  if (debug) console.warn("Code is being run in Debug Mode.");
+  
+  // Check if the code is being run with a delay:
+  if (document.getElementById("delay").value !== "" && document.getElementById("delay").value !== "0") {
+    interval = setInterval(function() {
+      // If the code is being run in debug mode, log some extra information:
+      if (debug) logDebug("pre", code);
+      // Run a loop of the code:
+      loop(code);
+      // If the code is being run in debug mode, log some extra information:
+      if (debug) logDebug("post", code);
+      // Check if finished:
+      if (curChar >= code.length) {
+        // Finish:
+        finish();
+      }
+    }, Number(document.getElementById("delay").value));
+  }
+  
+  // No delay (instant mode):
+  else {
+    // Run all loops of the code:
+    while (curChar < code.length) {
+      loop(code);
+    }
+    // Finish:
+    finish();
+  }
 }
 
-// do whatever the current character says to do (">" moves the pointer right, "<" moves it left, etc.)
+function stop() {
+  // Set the state to "stopped":
+  setState("stopped");
+  // Clear the interval (if it exists):
+  if (interval) clearInterval(interval);
+}
+
+function finish() {
+  // Set the state to "finished":
+  setState("finished", (new Date().getTime()) - startTime);
+  // Clear the interval (if it exists):
+  if (interval) clearInterval(interval);
+  // Log some information:
+  console.warn("Finished!");
+  console.log("Result:");
+  console.log(cells);
+  console.log("Pointer: " + pointer);
+}
+
+function logDebug(preOrPost, code) {
+  switch (preOrPost) {
+    // This is before the code is run:
+    case "pre":
+      console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
+    break;
+    // This is the result after the code is run:
+    case "post":
+      console.log("Result:");
+      console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
+      console.log(cells);
+      console.log("Pointer: " + pointer);
+      console.log("––––––––––");
+    break;
+  }
+}
+
+// Run a single loop of the code:
+function loop(code) {
+  var ret = run(code, curChar);
+  if (ret !== undefined) curChar = ret;
+  curChar++;
+}
+
+// Perform the action outlined by the current character (">" moves the pointer right, "<" moves it left, etc.)
 function run(code, curChar) {
   switch (code[curChar]) {
-    case ">": // ez
+    // Move the pointer right once:
+    case ">":
       pointer++;
     break;
-    case "<": // ez pz
+    // Move the pointer left once:
+    case "<":
       pointer--;
     break;
-    case "+": // ooo gettin' tougher
+    // Increment the cell being pointed to once:
+    case "+":
       cells[pointer]++;
     break;
-    case "-": // alr, alr...
+    // Deincrement the cell being pointed to once:
+    case "-":
       cells[pointer]--;
     break;
-    case ".": // now we talkin'
+    // Print the value in the cell being pointed to as an ASCII character:
+    case ".":
       document.getElementById("output").value += String.fromCharCode(cells[pointer]);
     break;
-    case ",": // ooooo dis is fun!
+    // Take an input and set the value in the cell being pointed to to it:
+    case ",":
       if (document.getElementById("input").value !== "") {
         cells[pointer] = document.getElementById("input").value.charCodeAt(0);
         document.getElementById("input").value = document.getElementById("input").value.substring(1, document.getElementById("input").value.length);
@@ -104,7 +142,8 @@ function run(code, curChar) {
         cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
       }
     break;
-    case "]": // we don't actually need to worry about loop openings, only the closings :)
+    // Loop if the value in the cell being pointed to is not 0:
+    case "]": // We don't actually need to worry about loop openings, only the closings :)
       if (cells[pointer] !== 0) {
         var layer = 1;
         var tempChar = curChar;
@@ -122,11 +161,15 @@ function run(code, curChar) {
   }
 }
 
+// Set the state in the time div:
 function setState(state, t) {
   var time = document.getElementById("time");
   switch(state) {
     case "running":
       time.innerHTML = "<p>Running...</p>";
+    break;
+    case "debug":
+      time.innerHTML = "<p>Running in Debug Mode...</p>";
     break;
     case "stopped":
       time.innerHTML = "<p>Stopped.</p>";
