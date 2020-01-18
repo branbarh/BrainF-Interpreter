@@ -15,6 +15,7 @@ for (var i = 0; i < 9999; i++) {
 var pointer = 0;
 var curChar = 0;
 var startTime = 0;
+var input = "";
 
 // Define the interval:
 var interval;
@@ -35,6 +36,7 @@ function run(debug) {
   
   // Get the code to be run:
   var code = cleanCode(document.getElementById("code").value);
+  input = document.getElementById("input").value;
   
   // Print to the console that the code is being run in debug mode:
   if (debug) console.warn("Code is being run in Debug Mode.");
@@ -152,9 +154,9 @@ function act(code, curChar) {
     break;
     // Take an input and set the value in the cell being pointed to to it:
     case ",":
-      if (document.getElementById("input").value !== "") {
-        cells[pointer] = document.getElementById("input").value.charCodeAt(0);
-        document.getElementById("input").value = document.getElementById("input").value.substring(1, document.getElementById("input").value.length);
+      if (input !== "") {
+        cells[pointer] = input.charCodeAt(0);
+        input = input.substring(1, input.length);
       } else {
         cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
       }
