@@ -1,0 +1,10 @@
+
+body {
+  font-family: Helvetica;
+  margin: 50px 25%;
+}
+
+textarea {
+  width: 50%;
+  height: 300px;
+}
