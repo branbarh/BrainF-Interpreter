@@ -35,7 +35,10 @@ window.addEventListener("load", function() {
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
     var interval = setInterval(function() {
-      run(code, code[curChar]);
+      var ret = run(code, code[curChar]);
+      if (ret !== undefined) {
+        curChar = ret;
+      }
       console.log(curChar + ": \"" + code[curChar] + "\"");
       console.log(cells);
       console.log("Pointer: " + pointer);
@@ -74,7 +77,17 @@ function run(code, curChar) {
       cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
-      // do this, thanks :)
+      var layer = 1;
+      var tempChar = curChar;
+      while (layer !== 0 && code[tempChar] !== "[") {
+        tempChar--;
+        if (code[tempChar] === "]") {
+          layer++;
+        } else if (code[tempChar] === "[") {
+          layer--;
+        }
+      }
+      return tempChar;
     break;
   }
 }
