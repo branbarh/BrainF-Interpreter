@@ -35,7 +35,7 @@ window.addEventListener("load", function() {
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
     var interval = setInterval(function() {
-      var ret = run(code, code[curChar]);
+      var ret = run(code, curChar);
       if (ret !== undefined) {
         curChar = ret;
       }
@@ -57,7 +57,7 @@ function doShit(yesThisIsTheNameOfTheVariableSoDealWithIt) {
 
 // do whatever the current character says to do (">" moves the pointer right, "<" moves it left, etc.)
 function run(code, curChar) {
-  switch (curChar) {
+  switch (code[curChar]) {
     case ">": // ez
       pointer++;
     break;
