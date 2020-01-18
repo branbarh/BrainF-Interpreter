@@ -162,8 +162,24 @@ function act(code, curChar) {
       }
       cells[pointer] = cells[pointer] % 256;
     break;
+    // Skip the loop if the value in the cell being pointed to is 0:
+    case "[":
+      if (cells[pointer] === 0) {
+        var layer = 1;
+        var tempChar = curChar;
+        while (tempChar < code.length - 1 && layer !== 0) {
+          tempChar++;
+          if (code[tempChar] === "]") {
+            layer--;
+          } else if (code[tempChar] === "[") {
+            layer++;
+          }
+        }
+        return tempChar;
+      }
+    break;
     // Loop if the value in the cell being pointed to is not 0:
-    case "]": // We don't actually need to worry about loop openings, only the closings :)
+    case "]":
       if (cells[pointer] !== 0) {
         var layer = 1;
         var tempChar = curChar;
