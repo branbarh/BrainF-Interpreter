@@ -87,6 +87,7 @@ function run(code, curChar) {
           layer--;
         }
       }
+      console.log(tempChar);
       return tempChar;
     break;
   }
