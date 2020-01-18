@@ -17,12 +17,21 @@ textarea:focus, input:focus, button:focus {
   outline: none;
   border: 1px solid rgb(50, 50, 50);
 }
+textarea, input, button {
+  background-color: rgb(255, 255, 255);
+  margin: 10px 0px;
+}
 textarea {
   height: 200px;
 }
 button {
   padding: 10px;
   border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+button:hover {
+  background-color: rgb(240, 240, 240);
 }
 p, textarea, input, button {
   font-size: 16pt;
