@@ -105,7 +105,7 @@ function logDebug(preOrPost, code) {
     case "post":
       console.log("Result:");
       var effect = "";
-      switch(prevChar) {
+      switch(code[prevChar]) {
         case ">":
           effect = "Moved the pointer right from cell " + (pointer - 1) + " to cell " + pointer;
         break;
