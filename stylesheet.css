@@ -8,17 +8,22 @@ h1 {
   font-size: 24pt;
 }
 
-textarea {
+textarea, input {
   width: calc(100% - 20px - 2px);
   padding: 10px;
   border: 1px solid rgb(200, 200, 200);
-  height: 250px;
 }
-textarea:focus {
+textarea:focus, input:focus, button:focus {
   outline: none;
   border: 1px solid rgb(50, 50, 50);
 }
-
-p, textarea {
+textarea {
+  height: 200px;
+}
+button {
+  padding: 10px;
+  border: 1px solid rgb(200, 200, 200);
+}
+p, textarea, input, button {
   font-size: 16pt;
 }
