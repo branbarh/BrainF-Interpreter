@@ -34,22 +34,32 @@ window.addEventListener("load", function() {
     curChar = 0;
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
-    var interval = setInterval(function() {
-      console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
-      var ret = run(code, curChar);
-      if (ret !== undefined) {
-        curChar = ret;
+    if (document.getElementById("delay").value) { // DEBUG MODE:
+      console.log("Code is being run in DEBUG MODE.\n---");
+      var interval = setInterval(function() {
+        console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
+        var ret = run(code, curChar);
+        if (ret !== undefined) {
+          curChar = ret;
+        }
+        curChar++;
+        console.log("Result:");
+        console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
+        console.log(cells);
+        console.log("Pointer: " + pointer);
+        console.log("---");
+        if (curChar >= code.length) {
+          console.log("Finished!");
+          clearInterval(interval);
+        }
+      }, Number(document.getElementById("delay").value));
+    } else {
+      while (curChar < code.length) {
+        var ret = run(code, curChar);
+        if (ret !== undefined) curChar = ret;
+        curChar++;
       }
-      curChar++;
-      console.log("Result:");
-      console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
-      console.log(cells);
-      console.log("Pointer: " + pointer);
-      console.log("---");
-      if (curChar >= code.length) {
-        clearInterval(interval);
-      }
-    }, Number(document.getElementById("delay").value) || 100);
+    }
   });
 });
 
