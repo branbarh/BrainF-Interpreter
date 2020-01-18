@@ -4,7 +4,21 @@ body {
   margin: 50px 25%;
 }
 
+h1 {
+  font-size: 24pt;
+}
+
 textarea {
-  width: 50%;
-  height: 300px;
+  width: calc(100% - 20px - 2px);
+  padding: 10px;
+  border: 1px solid rgb(200, 200, 200);
+  height: 250px;
+}
+textarea:focus {
+  outline: none;
+  border: 1px solid rgb(50, 50, 50);
+}
+
+p, textarea {
+  font-size: 16pt;
 }
