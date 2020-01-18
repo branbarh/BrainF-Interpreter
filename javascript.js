@@ -97,7 +97,12 @@ function run(code, curChar) {
       document.getElementById("output").value += String.fromCharCode(cells[pointer]);
     break;
     case ",": // ooooo dis is fun!
-      cells[pointer] = document.getElementById("input").value.charCodeAt(0) || prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
+      if (document.getElementById("input").value !== "") {
+        cells[pointer] = document.getElementById("input").value.charCodeAt(0);
+        document.getElementById("input").value = document.getElementById("input").value.substring(1, document.getElementById("input").value.length);
+      } else {
+        cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
+      }
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
       if (cells[pointer] !== 0) {
