@@ -35,15 +35,17 @@ window.addEventListener("load", function() {
     // get the garbage code the user wrote that probably does nothing interesting:
     var code = document.getElementById("code").value;
     var interval = setInterval(function() {
-      console.log(curChar + ": \"" + code[curChar] + "\"");
-      console.log(cells);
-      console.log("Pointer: " + pointer);
-      console.log("---");
+      console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
       var ret = run(code, curChar);
       if (ret !== undefined) {
         curChar = ret;
       }
       curChar++;
+      console.log("Result:");
+      console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
+      console.log(cells);
+      console.log("Pointer: " + pointer);
+      console.log("---");
       if (curChar >= code.length) {
         clearInterval(interval);
       }
@@ -77,7 +79,6 @@ function run(code, curChar) {
       cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
-      console.log(cells[pointer]);
       if (cells[pointer] !== 0) {
         var layer = 1;
         var tempChar = curChar;
@@ -90,8 +91,6 @@ function run(code, curChar) {
           }
         }
         return tempChar;
-      } else {
-        console.log("wut");
       }
     break;
   }
