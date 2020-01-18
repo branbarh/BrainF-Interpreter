@@ -34,7 +34,7 @@ function run(debug) {
   startTime = new Date().getTime();
   
   // Get the code to be run:
-  var code = document.getElementById("code").value;
+  var code = cleanCode(document.getElementById("code").value);
   
   // Print to the console that the code is being run in debug mode:
   if (debug) console.warn("Code is being run in Debug Mode.");
@@ -101,6 +101,17 @@ function logDebug(preOrPost, code) {
       console.log("––––––––––");
     break;
   }
+}
+
+function cleanCode(code) {
+  var chars = "+-<>.,[]".split("");
+  var temp = "";
+  for (var i = 0; i < code.length; i++) {
+    if (chars.indexOf(code[i]) !== -1) {
+      temp += code[i];
+    }
+  }
+  return temp;
 }
 
 // Run a single loop of the code:
