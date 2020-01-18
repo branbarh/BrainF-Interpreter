@@ -37,20 +37,19 @@ window.addEventListener("load", function() {
     if (document.getElementById("delay").value) { // DEBUG MODE:
       console.warn("Code is being run in DEBUG MODE.");
       var interval = setInterval(function() {
-        console.table(new Comm("(" + curChar + "): \"" + code[curChar] + "\""));
+        console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
         var ret = run(code, curChar);
         if (ret !== undefined) {
           curChar = ret;
         }
         curChar++;
         console.log("Result:");
-        console.table(new Result("(" + curChar + "): \"" + code[curChar] + "\"", cells, pointer));
-//         console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
-//         console.log(cells);
-//         console.log("Pointer: " + pointer);
+        console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
+        console.log(cells);
+        console.log("Pointer: " + pointer);
         console.log("––––––––––");
         if (curChar >= code.length) {
-          console.log("Finished!");
+          console.warn("Finished!");
           clearInterval(interval);
         }
       }, Number(document.getElementById("delay").value));
@@ -105,13 +104,4 @@ function run(code, curChar) {
       }
     break;
   }
-}
-
-function Comm(Command) {
-  this.Command = Command;
-}
-function Result(New_Command, Cells, Pointer) {
-  this.New_Command = New_Command;
-  this.Cells = Cells;
-  this.Pointer = Pointer;
 }
