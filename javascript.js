@@ -60,6 +60,10 @@ window.addEventListener("load", function() {
         if (ret !== undefined) curChar = ret;
         curChar++;
       }
+      console.log("Result:");
+      console.log(cells);
+      console.log("Pointer: " + pointer);
+      console.warn("Finished!");
     }
   });
 });
