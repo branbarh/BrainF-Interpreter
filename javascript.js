@@ -64,7 +64,7 @@ function run(code, curChar) {
       document.getElementById("output").value += String.fromCharCode(cells[pointer]);
     break;
     case ",": // ooooo dis is fun!
-      cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charAt(0);
+      cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0);
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
       // do this, thanks :)
