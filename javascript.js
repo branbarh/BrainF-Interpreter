@@ -104,6 +104,7 @@ function run(code, curChar) {
           } else if (code[tempChar] === "[") {
             layer--;
           }
+          console.log(layer);
         }
         return tempChar;
       }
