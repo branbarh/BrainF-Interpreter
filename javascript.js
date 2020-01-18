@@ -97,7 +97,7 @@ function run(code, curChar) {
       document.getElementById("output").value += String.fromCharCode(cells[pointer]);
     break;
     case ",": // ooooo dis is fun!
-      cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
+      cells[pointer] = document.getElementById("input").value.charCodeAt(0) || prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
       if (cells[pointer] !== 0) {
@@ -117,7 +117,7 @@ function run(code, curChar) {
   }
 }
 
-function setState(state, time) {
+function setState(state, t) {
   var time = document.getElementById("time");
   switch(state) {
     case "running":
@@ -127,7 +127,7 @@ function setState(state, time) {
       time.innerHTML = "<p>Stopped.</p>";
     break;
     case "finished":
-      time.innerHTML = "<p>Finished in " + time + "ms!<br>See the result of the cells and the pointer in the console.</p>"
+      time.innerHTML = "<p>Finished in " + t + "ms!<br>See the result of the cells and the pointer in the console.</p>"
     break;
   }
 }
