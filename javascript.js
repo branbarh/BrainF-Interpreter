@@ -125,7 +125,7 @@ function logDebug(preOrPost, code) {
           effect = "Printed an output of \"" + String.fromCharCode(cells[pointer]) + "\"";
         break;
         case "[":
-          effect = ((cells[poiner] === 0) ? ("Skipped a loop starting at character " + prevChar + " and ending at character " + curChar) : ("Entered a loop starting at character " + prevChar));
+          effect = ((cells[pointer] === 0) ? ("Skipped a loop starting at character " + prevChar + " and ending at character " + curChar) : ("Entered a loop starting at character " + prevChar));
         break;
         case "]":
           effect = ((cells[pointer] === 0) ? ("Exited a loop ending at character " + prevChar) : ("Looped back from character " + pevChar + " to character " + curChar));
