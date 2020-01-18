@@ -97,14 +97,13 @@ function run(code, curChar) {
       if (cells[pointer] !== 0) {
         var layer = 1;
         var tempChar = curChar;
-        while (tempChar > 0 && layer !== 0 && code[tempChar] !== "[") {
+        while (tempChar > 0 && layer !== 0) {
           tempChar--;
           if (code[tempChar] === "]") {
             layer++;
           } else if (code[tempChar] === "[") {
             layer--;
           }
-          console.log(layer);
         }
         return tempChar;
       }
