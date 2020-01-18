@@ -14,6 +14,7 @@ for (var i = 0; i < 9999; i++) {
 // setup the pointer and some other variables:
 var pointer = 0;
 var curChar = 0;
+var prevChar = 0;
 var startTime = 0;
 var input = "";
 
@@ -92,14 +93,43 @@ function logDebug(preOrPost, code) {
   switch (preOrPost) {
     // This is before the code is run:
     case "pre":
+      prevChar = curChar;
       console.log("Command (" + curChar + "): \"" + code[curChar] + "\"");
     break;
     // This is the result after the code is run:
     case "post":
       console.log("Result:");
-      console.log("New Command (" + curChar + "): \"" + code[curChar] + "\"");
+      var effect = "";
+      switch(prevChar) {
+        case ">":
+          effect = "Moved the pointer right from cell " + (pointer - 1) + " to cell " + pointer;
+        break;
+        case "<":
+          effect = "Moved the pointer left from cell " + (pointer + 1) + " to cell " + pointer;
+        break;
+        case "+":
+          effect = "Incremented the current cell from " + ((((cells[pointer] - 1) % 256) + 256) % 256) + " to " + cells[pointer];
+        break;
+        case "-":
+          effect = "Deincremented the current cell from " + ((((cells[pointer] + 1) % 256) + 256) % 256) + " to " + cells[pointer];
+        break;
+        case ",":
+          effect = "Took an input and set the current cell to " + cells[pointer];
+        break;
+        case ".":
+          effect = "Printed an output of \"" + String.fromCharCode(cells[pointer]) + "\"";
+        break;
+        case "[":
+          effect = ((cells[poiner] === 0) ? ("Skipped a loop starting at character " + prevChar + " and ending at character " + curChar) : ("Entered a loop starting at character " + prevChar));
+        break;
+        case "]":
+          effect = ((cells[pointer] === 0) ? ("Exited a loop ending at character " + prevChar) : ("Looped back from character " + pevChar + " to character " + curChar));
+        break;
+      }
+      console.log("Effect: " + effect);
       console.log(cells);
       console.log("Pointer: " + pointer);
+      console.log("Next Command (" + curChar + "): \"" + code[curChar] + "\"");
       console.log("––––––––––");
     break;
   }
