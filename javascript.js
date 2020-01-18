@@ -37,7 +37,7 @@ window.addEventListener("load", function() {
       if (curChar >= code.length) {
         clearInterval(interval);
       }
-    }, 200);
+    }, document.getElementById("delay").value || 100);
   });
 });
 
