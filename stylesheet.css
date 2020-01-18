@@ -19,7 +19,7 @@ textarea:focus, input:focus, button:focus {
 }
 textarea, input, button {
   background-color: rgb(255, 255, 255);
-  margin: 10px 0px;
+  margin: 5px 0px;
 }
 textarea {
   height: 200px;
@@ -31,6 +31,7 @@ button {
   transition: all 0.5s;
 }
 button:hover {
+  cursor: pointer;
   background-color: rgb(240, 240, 240);
 }
 p, textarea, input, button {
