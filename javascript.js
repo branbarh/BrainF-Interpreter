@@ -77,18 +77,20 @@ function run(code, curChar) {
       cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
     break;
     case "]": // we don't actually need to worry about loop openings, only the closings :)
-      var layer = 1;
-      var tempChar = curChar;
-      while (layer !== 0 && code[tempChar] !== "[") {
-        tempChar--;
-        if (code[tempChar] === "]") {
-          layer++;
-        } else if (code[tempChar] === "[") {
-          layer--;
+      if (cells[pointer] !== 0) {
+        var layer = 1;
+        var tempChar = curChar;
+        while (tempChar > 0 && layer !== 0 && code[tempChar] !== "[") {
+          tempChar--;
+          if (code[tempChar] === "]") {
+            layer++;
+          } else if (code[tempChar] === "[") {
+            layer--;
+          }
         }
+        console.log(tempChar);
+        return tempChar;
       }
-      console.log(tempChar);
-      return tempChar;
     break;
   }
 }
