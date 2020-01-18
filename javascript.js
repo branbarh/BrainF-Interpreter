@@ -105,13 +105,13 @@ function logDebug(preOrPost, code) {
 
 // Run a single loop of the code:
 function loop(code) {
-  var ret = run(code, curChar);
+  var ret = act(code, curChar);
   if (ret !== undefined) curChar = ret;
   curChar++;
 }
 
 // Perform the action outlined by the current character (">" moves the pointer right, "<" moves it left, etc.)
-function run(code, curChar) {
+function act(code, curChar) {
   switch (code[curChar]) {
     // Move the pointer right once:
     case ">":
