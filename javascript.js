@@ -53,6 +53,7 @@ window.addEventListener("load", function() {
           clearInterval(interval);
         }
       }, Number(document.getElementById("delay").value));
+      document.getElementById("run").onclick = function() {clearInterval(interval);};
     } else {
       while (curChar < code.length) {
         var ret = run(code, curChar);
