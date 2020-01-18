@@ -1,7 +1,7 @@
 
 body {
   font-family: Helvetica;
-  margin: 50px 25%;
+  margin: 50px;
 }
 
 h1 {
@@ -37,4 +37,10 @@ button:hover {
 }
 p, textarea, input, button {
   font-size: 16pt;
+}
+
+@media (min-width: 992px) { /* Desktop+ */
+  body {
+    margin: 50px 25%;
+  }
 }
