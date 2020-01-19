@@ -193,7 +193,7 @@ function act(code, curChar) {
         cells[pointer] = input.charCodeAt(0);
         input = input.substring(1, input.length);
       } else {
-        cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read.").charCodeAt(0) || 0;
+        cells[pointer] = prompt("Enter a character to be used as an input. Only the first character will be read." + (document.getElementById("output").value !== "" ? ("\nOutput is currently:\n" + document.getElementById("output").value) : "")).charCodeAt(0) || 0;
       }
       cells[pointer] = cells[pointer] % 256;
     break;
