@@ -53,6 +53,36 @@ Info:
 
 ___
 
+### Factorial modular (WIP):
+```
+++++++++
+> , <
+  a
+
+[->------<] > convert from ASCII value to actual number
+
+[[->+>+<<]>>-] < spread out the number ("7" becomes "7"0"6"0"5"0"4"0"3"0"2"0"1"0"0...)
+
+--  put the spread out number back together ("7"0"6"0"5"0"4"0"3"0"2"0"1"0"0... becomes "7"6"5"4"3"2"1"0"0...)
+[
+  ++
+  [<<]>>
+  [>]>[[-<+>]>>]
+  <<<
+  --
+]
+++
+```
+Info:
+```
+[START]: on CELL 1
+[ROOM]: "a" CELLS
+[FINISH]: on CELL ?
+[RESULT]: on CELL ?
+[DESTRUCTIVE?]: ?
+```
+___
+
 ### Basic subtract modular (non-destructive):
 ```
 , > , <
